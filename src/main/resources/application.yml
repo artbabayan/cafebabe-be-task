@@ -1,0 +1,69 @@
+spring:
+  profiles:
+    active: dev
+  datasource:
+    test-on-borrow: true
+    validation-query: SELECT 1 FROM dual
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/cafe_db_dev?createDatabaseIfNotExist=true&useUnicode=yes&characterEncoding=UTF8&autoReconnect=true&useSSL=false
+    username: root
+    password: root
+    initialization-mode: always
+    hikari:
+      connection-timeout: 50000
+      minimum-idle: 10
+      maximum-pool-size: 30
+      idle-timeout: 10000
+      max-lifetime: 1000
+      auto-commit: true
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+        format_sql: true
+    open-in-view: false
+    show-sql: false
+  #redis configurations
+  cache:
+    type: redis
+    redis:
+      time-to-live: 1000
+  redis:
+    host: localhost
+    port: 6379
+    password: ""
+    jedis:
+      pool:
+        max-idle: 6
+        max-active: 32
+        max-wait: 100
+        min-idle: 4
+
+security:
+  oauth2:
+    client:
+      registration:
+          accessTokenUri: http://localhost:8080/oauth/token
+          clientId: kGymN4QPk4Fkg8L97xhm
+          clientSecret: uqLsFECyV2wbc5nCbwTe
+          grantType: password
+          scopeRead: read
+          scopeWrite: write
+          authorizationCode: authorization_code
+          implicit: implicit
+          token:
+            refreshToken: refresh_token
+            duration:
+              access_token: 36000 #second(10 hours)
+              refresh_token: 259200 #second(72 hours)
+  bot:
+    email: manager@foo.com
+    password: admin12345
+
+cors:
+  allowed:
+    origins:
+      https://localhost:8080,
+      https://localhost:3000
